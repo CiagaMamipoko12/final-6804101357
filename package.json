@@ -1,0 +1,18 @@
+{
+  "name": "jansomnurk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "powershell -NoProfile -Command \"npx playwright test; $r = Get-Content './reports/results.json' -Raw | ConvertFrom-Json; $s = $r.stats; $d = [math]::Round($s.duration / 1000, 2); $date = ([datetime]$s.startTime).ToLocalTime().ToString('yyyy-MM-dd HH:mm:ss'); $summary = '# Playwright Test Summary' + [Environment]::NewLine + [Environment]::NewLine + '- Test date: ' + $date + [Environment]::NewLine + '- Passed: ' + $s.expected + [Environment]::NewLine + '- Failed: ' + $s.unexpected + [Environment]::NewLine + '- Skipped: ' + $s.skipped + [Environment]::NewLine + '- Flaky: ' + $s.flaky + [Environment]::NewLine + '- Duration: ' + $d + ' seconds' + [Environment]::NewLine + [Environment]::NewLine + '## Errors' + [Environment]::NewLine; if ($s.unexpected -eq 0) { $summary += 'No failed tests reported in this test run.' } else { $summary += 'Check playwright-report/index.html and reports/results.json for failure details.' }; Set-Content './reports/test-summary.md' $summary -Encoding utf8; Write-Host 'Updated reports/test-summary.md'\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5"
+  }
+}
